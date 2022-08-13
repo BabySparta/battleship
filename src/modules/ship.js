@@ -5,8 +5,8 @@ class ship {
         this.hits = [];
     }
 
-    hit(index) {
-        this.hits.push(index);
+    hit(coord) {
+        this.hits.push(coord);
     }
 
     isSunk() {
