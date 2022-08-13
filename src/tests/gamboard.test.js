@@ -51,9 +51,55 @@ describe('Gameboard tests', () => {
         newBoard.placeShip(3, 0, 0, 'hori');
         expect(newBoard.recieveAttack(2, 0)).toEqual([[2,0]]);
     });
+    it('recieve multiple hits', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(2, 0);
+        expect(newBoard.recieveAttack(0, 0)).toEqual([[2,0],[0,0]]);
+    });
 
     it('recieve miss', () => {
         newBoard.placeShip(3, 0, 0, 'hori');
         expect(newBoard.recieveAttack(4, 0)).toEqual([[4,0]]);
     });
-})
+
+    it('recieve multiple misses', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(4, 0);
+        expect(newBoard.recieveAttack(2, 1)).toEqual([[4,0],[2,1]]);
+    });
+
+    // All Ships Sunk
+    it('no ship sunk', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(0, 0);
+        expect(newBoard.allShipsSunk()).toEqual(false);
+    });
+
+    it('one ship sunk', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(0, 0);
+        newBoard.recieveAttack(1, 0);
+        newBoard.recieveAttack(2, 0);
+        expect(newBoard.allShipsSunk()).toEqual(true);
+    });
+
+    it('multiple ships sunk', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(0, 0);
+        newBoard.recieveAttack(1, 0);
+        newBoard.recieveAttack(2, 0);
+        newBoard.placeShip(2, 1, 1, 'hori');
+        newBoard.recieveAttack(1, 1);
+        newBoard.recieveAttack(2, 1);
+        expect(newBoard.allShipsSunk()).toEqual(true);
+    });
+
+    it('only one ship sunk', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        newBoard.recieveAttack(0, 0);
+        newBoard.recieveAttack(1, 0);
+        newBoard.recieveAttack(2, 0);
+        newBoard.placeShip(2, 1, 1, 'hori');
+        expect(newBoard.allShipsSunk()).toEqual(false);
+    });
+});

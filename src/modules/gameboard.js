@@ -2,11 +2,11 @@ import ship from "./ship";
 
 class gameboard {
     constructor() {
-        this.board = this.initBoard();
+        this.board = this.#initBoard();
         this.missed = [];
         this.ships =[];
     }
-    initBoard() {
+    #initBoard() {
         let totalBoard = [];
         for (let y = 0; y < 10; y++) {
             let row = [];
@@ -37,20 +37,34 @@ class gameboard {
 
     recieveAttack (x, y) {
         if (this.board[y][x].hasShip) {
-            let shipIndex;
+            let hitShip;
             for (let i = 0; i < this.ships.length; i++) {
-                if (this.ships[i].location.includes([x,y])) {
-                    shipIndex = i;
-                }
+                if (this.#isCoordInLocation(this.ships[i].location, [x,y])) hitShip = this.ships[i];
             }
-            //this.ships[shipIndex].hit([x,y]);
-            return ([[1,2], 3].includes([1,2]));
+            hitShip.hit([x,y]);
+            return (hitShip.hits);
         } else {
             this.missed.push([x, y]);
             return this.missed;
         }
     }
 
+    allShipsSunk () {
+        let allSunk = true;
+        this.ships.forEach((boat) => {
+            if (!boat.isSunk()) allSunk = false;
+        })
+        return allSunk;
+    }
+
+    #isCoordInLocation (arr, item) {
+        const itemString = JSON.stringify(item);
+ 
+        const contains = arr.some(function(ele){
+          return JSON.stringify(ele) === itemString;
+        });
+        return contains;
+    }
 }
 
 export default gameboard;
