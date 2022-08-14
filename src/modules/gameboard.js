@@ -19,6 +19,8 @@ class gameboard {
     }
 
     placeShip (length, x, y, dir) {
+        if (!this.#checkIfValidSpot(x,y,length,dir)) return 'Not a valid spot';
+        else {
         const fullLocation = [];
         for (let i = 0; i < length; i++) {
             if (dir === 'hori') {
@@ -33,6 +35,7 @@ class gameboard {
         const newShip = new ship('ship', fullLocation);
         this.ships.push(newShip);
         return newShip;
+        }
     }
 
     recieveAttack (x, y) {
@@ -57,6 +60,29 @@ class gameboard {
             if (!boat.isSunk()) allSunk = false;
         })
         return allSunk;
+    }
+
+    #checkIfValidSpot (x,y, length, dir) {
+        let isValid = true;
+        for (let i = 0; i < length; i++) {
+            if (dir === 'hori') {
+                if (0 <= x + i && x + i < 8 && 0 <= y && y < 8) {
+                    this.ships.forEach((boat) => {
+                        if (this.#isCoordInLocation(boat.location, [x + i, y])) isValid = false;
+                    })
+                }
+                else isValid = false
+            } 
+            if (dir === 'vert') {
+                if (0 <= x && x < 8 && 0 <= y + i && y + i < 8) {
+                    this.ships.forEach((boat) => {
+                        if(this.#isCoordInLocation(boat.location, [x, y + i])) isValid = true;
+                    })
+                }
+                else isValid = false
+            }
+        }
+        return isValid;
     }
 
     #isCoordInLocation (arr, item) {

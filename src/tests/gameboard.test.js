@@ -18,6 +18,15 @@ describe('Gameboard tests', () => {
         expect(testPlace.location).toEqual([[0,0],[0,1],[0,2]])
     });
 
+    it('wont ship out of board', () => {
+        expect(newBoard.placeShip(3, 7, 0, 'hori')).toEqual('Not a valid spot')
+    });
+
+    it('wont place ship on other ships', () => {
+        newBoard.placeShip(3, 0, 0, 'hori');
+        expect(newBoard.placeShip(2, 0, 0, 'hori')).toEqual('Not a valid spot')
+    });
+
     it('gameboard has correct coords', () => {
         newBoard.placeShip(3, 0, 0, 'hori');
         const checkVal = () => {
