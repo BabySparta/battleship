@@ -42,9 +42,11 @@ class gameboard {
                 if (this.#isCoordInLocation(this.ships[i].location, [x,y])) hitShip = this.ships[i];
             }
             hitShip.hit([x,y]);
-            return (hitShip.hits);
+            this.board[y][x].isHit = true;
+            return hitShip.hits;
         } else {
             this.missed.push([x, y]);
+            this.board[y][x].isHit = true;
             return this.missed;
         }
     }
