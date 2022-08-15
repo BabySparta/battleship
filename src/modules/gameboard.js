@@ -66,7 +66,7 @@ class gameboard {
         let isValid = true;
         for (let i = 0; i < length; i++) {
             if (dir === 'hori') {
-                if (0 <= x + i && x + i < 8 && 0 <= y && y < 8) {
+                if (0 <= x + i && x + i < 10 && 0 <= y && y < 10) {
                     this.ships.forEach((boat) => {
                         if (this.#isCoordInLocation(boat.location, [x + i, y])) isValid = false;
                     })
@@ -74,7 +74,7 @@ class gameboard {
                 else isValid = false
             } 
             if (dir === 'vert') {
-                if (0 <= x && x < 8 && 0 <= y + i && y + i < 8) {
+                if (0 <= x && x < 10 && 0 <= y + i && y + i < 10) {
                     this.ships.forEach((boat) => {
                         if(this.#isCoordInLocation(boat.location, [x, y + i])) isValid = true;
                     })

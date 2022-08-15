@@ -19,7 +19,7 @@ describe('Gameboard tests', () => {
     });
 
     it('wont ship out of board', () => {
-        expect(newBoard.placeShip(3, 7, 0, 'hori')).toEqual('Not a valid spot')
+        expect(newBoard.placeShip(3, 9, 0, 'hori')).toEqual('Not a valid spot')
     });
 
     it('wont place ship on other ships', () => {
