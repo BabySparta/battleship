@@ -8,6 +8,7 @@ function genBoards () {
                 cell.classList.add('cell');
                 if (board.classList.contains('opponent')) cell.classList.add('oppCell');
                 if (board.classList.contains('player')) cell.classList.add('userCell');
+                if (board.classList.contains('modalBoard')) cell.classList.add('modalCell');
                 cell.dataset.x = y;
                 cell.dataset.y = i;
                 row.appendChild(cell);

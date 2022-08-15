@@ -75,6 +75,7 @@ body, html {
     background-color: var(--waterBlue);
     height: 100%;
     width: 10%;
+    position: relative;
 }
 .cell:hover {
     background-color: var(--hoverBlue);
@@ -110,6 +111,8 @@ body, html {
 .board.modalBoard {
     width: 550px;
     height: 550px;
+    padding: 0;
+    box-shadow: none;
     background-color: rgb(112,112,112);
 }
 
@@ -131,6 +134,23 @@ body, html {
 .changeAxis:hover {
     text-decoration: underline 4px solid black;
     text-underline-offset: 4px;
+    cursor: pointer;
+}
+
+.cell.placeHover {
+    background-color: var(--mainGray);
+}
+
+.cell.placeError {
+    background-color: red;
+}
+
+.shipIcon {
+    width: 275px;
+    height: 40px;
+    position: absolute;
+    left: 0;
+    z-index: 999;
 }
 
 /* Footer */
