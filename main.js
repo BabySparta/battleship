@@ -1,0 +1,1 @@
+(()=>{"use strict";document.querySelectorAll(".board").forEach((s=>{for(let e=0;e<100;e++){const e=document.createElement("div");e.classList.add("cell"),s.classList.contains("opponent")&&e.classList.add("oppCell"),s.classList.contains("player")&&e.classList.add("userCell"),s.appendChild(e)}}))})();
