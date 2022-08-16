@@ -1,5 +1,5 @@
 import genBoards from "./modules/DOM/genBoardsDOM";
-import initModal from './modules/DOM/modal';
+import * as modal from './modules/DOM/modal';
 
 genBoards();
-initModal();
+modal.initModal();
