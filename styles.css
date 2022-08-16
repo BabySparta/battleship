@@ -77,9 +77,6 @@ body, html {
     width: 10%;
     position: relative;
 }
-.cell:hover {
-    background-color: var(--hoverBlue);
-}
 
 /* Place Ships Modal */
 
@@ -109,8 +106,8 @@ body, html {
 }
 
 .board.modalBoard {
-    width: 550px;
-    height: 550px;
+    max-width: 550px;
+    max-height: 550px;
     padding: 0;
     box-shadow: none;
     background-color: rgb(112,112,112);
@@ -142,16 +139,45 @@ body, html {
 }
 
 .cell.placeError {
-    background-color: red;
+    background-color: rgba(255, 0, 0, 0.6);
+    cursor:not-allowed;
 }
 
-.shipIcon {
-    width: 275px;
-    height: 40px;
+.cell.alreadyPlacedError {
+    cursor:not-allowed;
+}
+
+/* Ships */
+
+.carrier, .battleship, .cruiser, .destroyer, .submarine {
+    height: 55px;
     position: absolute;
     left: 0;
     z-index: 999;
+    opacity: 0.8;
 }
+
+.carrier {
+    width: calc(55px * 5);
+}
+
+.battleship {
+    width: calc(55px * 4);
+}
+
+.cruiser, .submarine {
+    width: calc(55px * 3);
+}
+
+.destroyer {
+    width: calc(55px * 2);
+}
+
+.vertical {
+    transform: rotate(90deg);
+    transform-origin: calc(55px / 2) calc(55px / 2);
+}
+
 
 /* Footer */
 
