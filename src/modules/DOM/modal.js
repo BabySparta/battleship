@@ -1,3 +1,5 @@
+import playGame from '../gameController';
+
 const initModal = () => {
     modalHoverEvents('hori');
     const axisBtn = document.querySelector('.changeAxis');
@@ -259,7 +261,8 @@ function placeShipOnModal (cell) {
         removeClassHover(cell);
         ship++;
         shipLoc5 = [thisX, thisY, direction, 2];
-        return;
+        document.querySelector('.placeModal').style.display = 'none';
+        playGame();
     }
 }
 

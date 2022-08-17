@@ -1,9 +1,26 @@
-import gameboard from "./gameboard";
 import player from './player';
-import ship from "./ship";
+import { getShipLocations } from './DOM/modal';
 
 function playGame() {
+
+    // USER
     const user = new player('user');
+    const shipLocations = getShipLocations();
+    shipLocations.forEach(ship => {
+        user.gameboard.placeShip(ship[3], ship[0], ship[1], ship[2]);
+    })
+    const oppBoard = document.querySelectorAll('.oppCell');
+    oppBoard.forEach(cell => {
+        cell.addEventListener('click', () => {
+            const thisX = cell.getAttribute('data-x');
+            const thisY = cell.getAttribute('data-y');
+            user.attack(thisX, thisY, AI.gameboard);
+            AI.autoAttack(user.gameboard);
+            console.log(user.gameboard, AI.gameboard);
+        })
+    })
+
+    // AI 
     const AI = new player('AI');
 
     let shipLength = 5;
