@@ -42,10 +42,11 @@ class gameboard {
         if (this.board[y][x].hasShip) {
             let hitShip;
             for (let i = 0; i < this.ships.length; i++) {
-                if (this.#isCoordInLocation(this.ships[i].location, [x,y])) hitShip = this.ships[i];
+                if (this.#isCoordInLocation(this.ships[i].location, [x, y])) hitShip = this.ships[i];
             }
             hitShip.hit([x,y]);
             this.board[y][x].isHit = true;
+            if (hitShip.isSunk()) {}
             return hitShip.hits;
         } else {
             this.missed.push([x, y]);
@@ -76,7 +77,7 @@ class gameboard {
             if (dir === 'vert') {
                 if (0 <= x && x < 10 && 0 <= y + i && y + i < 10) {
                     this.ships.forEach((boat) => {
-                        if(this.#isCoordInLocation(boat.location, [x, y + i])) isValid = true;
+                        if(this.#isCoordInLocation(boat.location, [x, y + i])) isValid = false;
                     })
                 }
                 else isValid = false

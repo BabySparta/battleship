@@ -9,16 +9,6 @@ function playGame() {
     shipLocations.forEach(ship => {
         user.gameboard.placeShip(ship[3], ship[0], ship[1], ship[2]);
     })
-    const oppBoard = document.querySelectorAll('.oppCell');
-    oppBoard.forEach(cell => {
-        cell.addEventListener('click', () => {
-            const thisX = cell.getAttribute('data-x');
-            const thisY = cell.getAttribute('data-y');
-            user.attack(thisX, thisY, AI.gameboard);
-            AI.autoAttack(user.gameboard);
-            console.log(user.gameboard, AI.gameboard);
-        })
-    })
 
     // AI 
     const AI = new player('AI');
@@ -36,6 +26,22 @@ function playGame() {
         
         AI.gameboard.placeShip(shipLength, ranX, ranY, ranDir);
     }
+
+    // ATTACK
+
+    const oppBoard = document.querySelectorAll('.oppCell');
+    oppBoard.forEach(cell => {
+        cell.addEventListener('click', () => {
+            if (cell.firstChild) return;
+            const thisX = parseInt(cell.getAttribute('data-x'));
+            const thisY = parseInt(cell.getAttribute('data-y'));
+            const missLength = AI.gameboard.missed.length;
+            user.attack(thisX, thisY, AI.gameboard);
+            if (missLength < AI.gameboard.missed.length) placeMiss(cell);
+            else placeHit(cell);
+            AI.autoAttack(user.gameboard);
+        })
+    });
 }
 
 const getRandomCoord = () => {
@@ -45,6 +51,17 @@ const getRandomDirection = () => {
     const randomNum = Math.round(Math.random());
     if (randomNum === 0) return 'hori';
     return 'vert';
+}
+// Place attack markers
+const placeMiss = (cell) => {
+    const missIcon = document.createElement('div');
+    missIcon.classList.add('miss');
+    cell.appendChild(missIcon);
+}
+const placeHit = (cell) => {
+    const hitIcon = document.createElement('div');
+    hitIcon.classList.add('hit');
+    cell.appendChild(hitIcon);
 }
 
 export default playGame;

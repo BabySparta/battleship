@@ -76,6 +76,9 @@ body, html {
     height: 100%;
     width: 10%;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
 /* Place Ships Modal */
@@ -176,6 +179,20 @@ body, html {
 .vertical {
     transform: rotate(90deg);
     transform-origin: calc(55px / 2) calc(55px / 2);
+}
+
+/* Attack Icons */
+
+.miss, .hit {
+    width: 45px;
+    height: 45px;
+    border-radius: 50%;
+}
+.miss {
+    background-color: white;
+}
+.hit {
+    background-color: red;
 }
 
 

@@ -16,11 +16,11 @@ class player {
     }
 
     autoAttack (enemyboard) {
-        const ranX = Math.round(Math.random() * 7);
-        const ranY = Math.round(Math.random() * 7);
+        const ranX = Math.round(Math.random() * 9);
+        const ranY = Math.round(Math.random() * 9);
 
         if (enemyboard.board[ranY][ranX].isHit) {
-            autoAttack(enemyboard);
+            this.autoAttack(enemyboard);
         } else {
             enemyboard.recieveAttack(ranX, ranY);
         }
