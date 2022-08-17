@@ -63,7 +63,8 @@ describe('Gameboard tests', () => {
     it('recieve multiple hits', () => {
         newBoard.placeShip(3, 0, 0, 'hori');
         newBoard.recieveAttack(2, 0);
-        expect(newBoard.recieveAttack(0, 0)).toEqual([[2,0],[0,0]]);
+        newBoard.recieveAttack(0, 0);
+        expect(newBoard.ships[0].hits).toEqual([[0,0],[2,0]]);
     });
 
     it('recieve miss', () => {

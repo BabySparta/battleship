@@ -150,6 +150,10 @@ body, html {
     cursor:not-allowed;
 }
 
+.oppCell:hover {
+    background-color: var(--hoverBlue);
+}
+
 /* Ships */
 
 .carrier, .battleship, .cruiser, .destroyer, .submarine {
@@ -184,8 +188,8 @@ body, html {
 /* Attack Icons */
 
 .miss, .hit {
-    width: 45px;
-    height: 45px;
+    width: 25px;
+    height: 25px;
     border-radius: 50%;
 }
 .miss {
@@ -193,8 +197,34 @@ body, html {
 }
 .hit {
     background-color: red;
+    z-index: 1000;
 }
 
+/* Ships in game */
+
+.carrier.playerShip, .battleship.playerShip, .cruiser.playerShip, .destroyer.playerShip, .submarine.playerShip {
+    height: 53px;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+    opacity: 0.8;
+}
+
+.carrier.playerShip {
+    width: calc(53px * 5);
+}
+
+.battleship.playerShip {
+    width: calc(53px * 4);
+}
+
+.cruiser.playerShip, .submarine.playerShip {
+    width: calc(53px * 3);
+}
+
+.destroyer.playerShip {
+    width: calc(53px * 2);
+}
 
 /* Footer */
 
