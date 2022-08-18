@@ -236,6 +236,49 @@ body, html {
     pointer-events: none;
 }
 
+/* Game over modal */
+
+.endModal {
+    position: absolute;
+    top: 0;
+    width: 100vw;
+    height: 100vh;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background-color: rgba(0,0,0,0.6);
+    z-index: 2000;
+}
+
+.endContent {
+    height: 50%;
+    width: 40%;
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    flex-direction: column;
+}
+
+.whoWon, .playAgain {
+    font-size: 3rem;
+    font-family: battle, sans-serif;
+    text-align: center;
+    text-shadow: -1px 1px 0 var(--mainGray),
+                  1px 1px 0 var(--mainGray),
+                  1px -1px 0 var(--mainGray),
+                  -1px -1px 0 var(--mainGray);
+}
+
+.playAgain {
+    background-color: transparent;
+    outline: none;
+    border: none;
+}
+.playAgain:hover {
+    text-decoration: underline 2px solid black;
+    text-underline-offset: 4px;
+}
+
 
 /* Footer */
 

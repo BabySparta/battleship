@@ -47,7 +47,12 @@ function playGame() {
                 placeHit(cell);
                 AI.gameboard.ships.forEach(ship => {
                     if (ship.isSunk()) displaySunkShip(ship);
-                })
+                });
+                if (AI.gameboard.allShipsSunk()) {
+                    document.querySelector('.endModal').style.display = 'flex';
+                    document.querySelector('.whoWon').textContent = 'CONGRATULATIONS. YOU SUNK ALL ENEMY SHIPS AND WON THE BATTLE!';
+                    return;
+                }
             }
 
             // Place AI shot on DOM
@@ -56,7 +61,18 @@ function playGame() {
             while (!AIattack) AIattack = AI.autoAttack(user.gameboard);
             const AIcell = document.querySelector(`.userCell[data-x="${AIattack[0]}"][data-y="${AIattack[1]}"]`);
             if (AImiss < user.gameboard.missed.length) placeMiss(AIcell);
-            else placeHit(AIcell);
+            else {
+                placeHit(AIcell);
+                if (user.gameboard.allShipsSunk()) {
+                    document.querySelector('.endModal').style.display = 'flex';
+                    document.querySelector('.whoWon').textContent = 'ARGHH! THE ENEMY HAS SUNK ALL YOUR SHIPS AND YOU HAVE TO RETREAT. REGROUP AND TRY AGAIN.'
+                }
+            }
+
+            // Add new game event listener
+            document.querySelector('.playAgain').addEventListener('click', () => {
+                location.reload();
+            })
         });
     });
 }
