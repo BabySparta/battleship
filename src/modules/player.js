@@ -1,4 +1,5 @@
 import gameboard from "./gameboard";
+import AImove from "./AI";
 
 class player {
     constructor(name) {
@@ -16,6 +17,8 @@ class player {
     }
 
     autoAttack (enemyboard) {
+        const AIplay = AImove(enemyboard)
+        if (AIplay) return AIplay;
         const ranX = Math.round(Math.random() * 9);
         const ranY = Math.round(Math.random() * 9);
         if (enemyboard.board[ranY][ranX].isHit) {
