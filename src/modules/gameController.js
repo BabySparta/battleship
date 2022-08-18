@@ -8,7 +8,7 @@ function playGame() {
     const shipLocations = getShipLocations();
     shipLocations.forEach(ship => {
         user.gameboard.placeShip(ship[3], ship[0], ship[1], ship[2]);
-        placeOnDOM(user.gameboard.ships.slice(-1)[0], shipLocations.indexOf(ship));
+        placeOnDOM(user.gameboard.ships.slice(-1)[0], shipLocations.indexOf(ship), 'userCell');
     })
 
     // AI 
@@ -25,14 +25,17 @@ function playGame() {
         if (AI.gameboard.ships.length === 4) shipLength = 2;
         
         AI.gameboard.placeShip(shipLength, ranX, ranY, ranDir);
-    }
+    };
+    AI.gameboard.ships.forEach(ship => {
+        placeOnDOM(ship, AI.gameboard.ships.indexOf(ship), 'oppCell');
+    })
 
     // ATTACK
 
     const oppBoard = document.querySelectorAll('.oppCell');
     oppBoard.forEach(cell => {
         cell.addEventListener('click', () => {
-            if (cell.firstChild) return;
+            if (cell.lastChild && (cell.lastChild.classList.contains('hit') || cell.lastChild.classList.contains('miss'))) return;
             const thisX = parseInt(cell.getAttribute('data-x'));
             const thisY = parseInt(cell.getAttribute('data-y'));
 
@@ -40,7 +43,12 @@ function playGame() {
             const missLength = AI.gameboard.missed.length;
             user.attack(thisX, thisY, AI.gameboard);
             if (missLength < AI.gameboard.missed.length) placeMiss(cell);
-            else placeHit(cell);
+            else {
+                placeHit(cell);
+                AI.gameboard.ships.forEach(ship => {
+                    if (ship.isSunk()) displaySunkShip(ship);
+                })
+            }
 
             // Place AI shot on DOM
             const AImiss = user.gameboard.missed.length;
@@ -53,6 +61,7 @@ function playGame() {
     });
 }
 
+// Get random values for AI attack
 const getRandomCoord = () => {
     return Math.floor(Math.random() * 10)
 }
@@ -75,36 +84,52 @@ const placeHit = (cell) => {
 
 // Place ships on board
 
-const placeOnDOM = (ship, index) => {
+const placeOnDOM = (ship, index, cellType) => {
     const startX = ship.location[0][0];
     const startY = ship.location[0][1];
     const direction = getDirection(ship);
-    const origin = document.querySelector(`.userCell[data-x="${startX}"][data-y="${startY}"]`);
+    const origin = document.querySelector(`.${cellType}[data-x="${startX}"][data-y="${startY}"]`);
     const shipImg = document.createElement('img');
     if (direction === 'vert') shipImg.classList.add('vertical');
     shipImg.classList.add('playerShip');
     if (index === 0) {
         shipImg.classList.add('carrier');
+        shipImg.classList.add('oppShip');
         shipImg.src = './resources/carrier.png';
     } if (index === 1) {
         shipImg.classList.add('battleship');
+        shipImg.classList.add('oppShip');
         shipImg.src = './resources/battleship.png';
     } if (index === 2) {
         shipImg.classList.add('cruiser');
+        shipImg.classList.add('oppShip');
         shipImg.src = './resources/cruiser.png';
     } if (index === 3) {
         shipImg.classList.add('submarine');
+        shipImg.classList.add('oppShip');
         shipImg.src = './resources/submarine.png';
     } if (index === 4) {
         shipImg.classList.add('destroyer');
+        shipImg.classList.add('oppShip');
         shipImg.src = './resources/destroyer.png';
     }
     origin.appendChild(shipImg);
+    if (cellType === 'oppCell') shipImg.style.opacity = 0;
 }
 
 const getDirection = (ship) => {
     if (ship.location[0][0] === ship.location[1][0]) return 'vert';
     return 'hori';
+}
+
+// Show sunk ships
+
+const displaySunkShip = (ship) => {
+    const sunkX = ship.location[0][0];
+    const sunkY = ship.location[0][1];
+
+    const cellWithShip = document.querySelector(`.oppCell[data-x="${sunkX}"][data-y="${sunkY}"]`);
+    cellWithShip.firstChild.style.opacity = 0.8;
 }
 
 export default playGame;
