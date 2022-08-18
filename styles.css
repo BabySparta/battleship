@@ -210,21 +210,32 @@ body, html {
     opacity: 0.8;
 }
 
-.carrier.playerShip {
+.carrier.playerShip, .carrier.oppShip {
     width: calc(53px * 5);
 }
 
-.battleship.playerShip {
+.battleship.playerShip, .battleship.oppShip {
     width: calc(53px * 4);
 }
 
-.cruiser.playerShip, .submarine.playerShip {
+.cruiser.playerShip, .submarine.playerShip, .cruiser.oppShip, .submarine.oppShip {
     width: calc(53px * 3);
 }
 
-.destroyer.playerShip {
+.destroyer.playerShip, .destroyer.oppShip {
     width: calc(53px * 2);
 }
+
+.carrier.oppShip, .battleship.oppShip, .cruiser.oppShip, .destroyer.oppShip, .submarine.oppShip {
+    height: 53px;
+    position: absolute;
+    left: 0;
+    z-index: 999;
+    opacity: 0.8;
+    transition: 0.5s ease-in-out;
+    pointer-events: none;
+}
+
 
 /* Footer */
 
