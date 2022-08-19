@@ -14,10 +14,9 @@ function AImove (gameboard) {
         if (hasOpenSpace(hit, gameboard)) validSpots.push(hit);
     })
 
-    let firstHit = validSpots[0];
-    console.log(firstHit);
+    let firstHit = validSpots.slice(-1)[0];
     const smartAttack = findShips(firstHit, gameboard, validSpots);
-    if (smartAttack) {console.log(firstHit); return smartAttack;}
+    if (smartAttack) return smartAttack;
     if (firstHit[1] + 1 < 10 && !gameboard.board[firstHit[1] + 1][firstHit[0]].isHit) {gameboard.recieveAttack(firstHit[0], firstHit[1] + 1); return [firstHit[0], firstHit[1] + 1]}
     else if (firstHit[0] + 1 < 10 && !gameboard.board[firstHit[1]][firstHit[0] + 1].isHit) {gameboard.recieveAttack(firstHit[0] + 1, firstHit[1]); return [firstHit[0] + 1, firstHit[1]]}
     else if (firstHit[1] - 1 >= 0 && !gameboard.board[firstHit[1] - 1][firstHit[0]].isHit) {gameboard.recieveAttack(firstHit[0], firstHit[1] - 1); return [firstHit[0], firstHit[1] - 1]}
@@ -36,24 +35,24 @@ const hasOpenSpace = (shot, gameboard) => {
 
 const findShips = (shot, gameboard, validSpots) => {
     // Vertical Ship
-    if (gameboard.board[shot[1] - 1][shot[0]].isHit && gameboard.board[shot[1] + 1][shot[0]].isHit) {
+    if (shot[1] -1 >= 0 && gameboard.board[shot[1] - 1][shot[0]].isHit && shot[1] + 1 < 10 && gameboard.board[shot[1] + 1][shot[0]].isHit) {
         const index = validSpots.indexOf(shot);
         let newValid = validSpots.splice(index, 1);
         shot = newValid[0];
     }
-    if (shot[1] + 1 < 10 && gameboard.board[shot[1] + 1][shot[0]].isHit && gameboard.board[shot[1] + 1][shot[0]].hasShip) {
+    if (shot[1] + 1 < 10 && gameboard.board[shot[1] + 1][shot[0]].isHit) {
         if (shot[1] - 1 >= 0 && !gameboard.board[shot[1] - 1][shot[0]].isHit) {
         gameboard.recieveAttack(shot[0], shot[1] - 1); return [shot[0], shot[1] - 1];
         }
     }
-    if (gameboard.board[shot[1] - 1][shot[0]] && gameboard.board[shot[1] - 1][shot[0]].isHit && gameboard.board[shot[1] - 1][shot[0]].hasShip) {
+    if (shot[1] - 1 >=0 && gameboard.board[shot[1] - 1][shot[0]].isHit) {
         if (shot[1] + 1 < 10 && !gameboard.board[shot[1] + 1][shot[0]].isHit) {
         gameboard.recieveAttack(shot[0], shot[1] + 1); return [shot[0], shot[1] + 1];
         }
     }
     
     // Horizontal Ship
-    if (gameboard.board[shot[1]][shot[0] - 1].isHit && gameboard.board[shot[1]][shot[0] + 1].isHit) {
+    if (shot[0] - 1 >= 0 && gameboard.board[shot[1]][shot[0] - 1].isHit && shot[0] + 1 < 10 && gameboard.board[shot[1]][shot[0] + 1].isHit) {
         const index = validSpots.indexOf(shot);
         let newValid = validSpots.splice(index, 1);
         shot = newValid[0];
@@ -63,7 +62,7 @@ const findShips = (shot, gameboard, validSpots) => {
         gameboard.recieveAttack(shot[0] - 1, shot[1]); return [shot[0] - 1, shot[1]];
         }
     }
-    if (gameboard.board[shot[1]][shot[0] - 1] && gameboard.board[shot[1]][shot[0] - 1].isHit && gameboard.board[shot[1]][shot[0] - 1].hasShip) {
+    if (shot[0] - 1 >= 0 && gameboard.board[shot[1]][shot[0] - 1].isHit && gameboard.board[shot[1]][shot[0] - 1].hasShip) {
         if (shot[0] + 1 < 10 && !gameboard.board[shot[1]][shot[0] + 1].isHit) {
         gameboard.recieveAttack(shot[0] + 1, shot[1]); return [shot[0] + 1, shot[1]];
         }
